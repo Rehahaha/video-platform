@@ -1,0 +1,43 @@
+server:
+  port: 8080
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 500MB        # 单个文件最大大小（根据你的视频大小调整，比如500MB）
+      max-request-size: 1000MB     # 整个请求的最大大小（需大于等于max-file-size）
+      enabled: true               # 开启文件上传支持（默认开启，显式配置更稳妥）
+  datasource:
+    url: jdbc:mysql://localhost:3306/video_site?useSSL=false&serverTimezone=UTC&characterEncoding=utf8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+jwt:
+  secret: "my-super-secret-key-for-demo-video-site-please-change-in-production"
+  expiration-minutes: 120
+
+video:
+  storage:
+    base-path: "E:/浏览器/video-storage" # 这里可以改成你本机实际想存放视频的目录
+
+# 简单关闭 Spring Security 的默认登录页，后面我们会手动配置 JWT 形式的认证
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+
